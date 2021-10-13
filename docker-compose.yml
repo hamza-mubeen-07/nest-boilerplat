@@ -1,16 +1,16 @@
-version: "3.8"
+version: "3.0"
 
 services:
   app:
     image: "node:14-slim"
-    container_name: docker-nest-js
+    container_name: 'server-application-nest'
     build:
       context: .
       dockerfile: Dockerfile.slim
     user: "node"
     working_dir: /usr/src/app
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
       - VERSION=1.0
     volumes:
       - .:/usr/src/app
@@ -18,5 +18,41 @@ services:
     ports:
       - "3000:3000"
     tty: true
+    networks:
+      - nest-network
     command: "npm start"
-  
+
+  database-mysql:
+    image: mysql:5.7
+    restart: always
+    networks:
+      - nest-network
+    environment:
+      MYSQL_DATABASE: ${DATABASE_NAME}
+      MYSQL_USER: ${DATABASE_USER}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+    ports:
+      - "3307:3306"
+    expose:
+      - "3307"
+    volumes:
+      - datastore:/var/lib/mysql
+
+  phpmyadmin:
+    depends_on:
+      - database-mysql
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - '3308:80'
+    environment:
+      PMA_HOST: global-mysql-5.7
+      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+    networks:
+      - nest-network
+
+volumes:
+  datastore:
+networks:
+  nest-network:

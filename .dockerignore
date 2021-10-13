@@ -18,3 +18,5 @@ npm-debug.log.*
 # Source files
 src
 test
+.idea
+dist
