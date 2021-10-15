@@ -1,16 +1,24 @@
 import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../../../prisma/prisma.service';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
 
 let server: { close: (arg0: (err: any) => void) => void };
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   server = await app.listen(process.env.PORT);
   const prismaService: PrismaService = app.get(PrismaService);
-  prismaService.enableShutdownHooks(app);
-  console.log('Application has started on ' + process.env.PORT);
+  await prismaService.enableShutdownHooks(app);
+  console.log(
+    'User service is running on Port: 0.0.0.0:' + process.env.USERS_PORT,
+  );
+
+  app.useStaticAssets(join(__dirname, '..', 'public'));
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  app.setViewEngine('hbs');
 
   // Handle process kill signals
   process.on('SIGINT', shutdown);
@@ -18,7 +26,6 @@ async function bootstrap() {
 }
 
 function shutdown() {
-  // Gracefully close outstanding HTTP connections
   server.close((err) => {
     if (err) {
       console.error(
@@ -28,10 +35,6 @@ function shutdown() {
       process.exit(1);
     }
     console.log('Http server closed.');
-
-    // Close data connections here, eg database pool connections
-
-    // clean up your resources and exit
     process.exit(0);
   });
 }

@@ -1,0 +1,29 @@
+{
+  "monorepo": true,
+  "root": "apps/nest-js-docker-starter",
+  "sourceRoot": "apps/nest-js-docker-starter/src",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/nest-js-docker-starter/tsconfig.app.json"
+  },
+  "projects": {
+    "nest-js-docker-starter": {
+      "type": "application",
+      "root": "apps/nest-js-docker-starter",
+      "entryFile": "main",
+      "sourceRoot": "apps/nest-js-docker-starter/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/nest-js-docker-starter/tsconfig.app.json"
+      }
+    },
+    "auth": {
+      "type": "application",
+      "root": "apps/auth",
+      "entryFile": "main",
+      "sourceRoot": "apps/auth/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/auth/tsconfig.app.json"
+      }
+    }
+  }
+}

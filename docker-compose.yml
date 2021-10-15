@@ -3,7 +3,7 @@ version: "3.0"
 services:
   app:
     image: "node:14-slim"
-    container_name: 'server-application-nest'
+    container_name: 'server'
     build:
       context: .
       dockerfile: Dockerfile.slim

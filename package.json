@@ -1,13 +1,13 @@
 {
-  "name": "nest-js-docker-starter",
+  "name": "nest-js-micorservice-application-boiler-plate",
   "version": "1.0.0",
-  "description": "Nest TypeScript starter repository",
+  "description": "Nest TypeScript based microservice repository.",
   "license": "MIT",
-  "author": "Dennis Riungu",
+  "author": "jupitor",
   "main": "dist/main.js",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "node dist/main.js",
     "start:ts": "ts-node -r tsconfig-paths/register src/main.ts",
     "start:dev": "nodemon",
@@ -16,21 +16,23 @@
     "prestart:prod": "rimraf dist && npm run build",
     "build:prod": "rimraf dist && npm run build",
     "lint": "tslint -p tsconfig.json -c tslint.json",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config apps/user/test/jest-e2e.json"
   },
   "dependencies": {
     "@google-cloud/secret-manager": "^3.0.0",
     "@nestjs/common": "^7.1.1",
     "@nestjs/core": "^7.1.1",
+    "@nestjs/mapped-types": "*",
     "@nestjs/microservices": "^7.1.1",
     "@nestjs/platform-express": "^7.1.1",
     "@nestjs/websockets": "^7.1.1",
     "@prisma/client": "^3.2.1",
     "dotenv": "^8.2.0",
+    "hbs": "^4.1.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.5"
@@ -58,12 +60,15 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
+    "rootDir": ".",
     "testRegex": ".spec.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "coverageDirectory": "./coverage",
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/apps/"
+    ]
   }
 }
