@@ -1,14 +1,15 @@
 import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { InternalServerErrorException } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
 
 let server: { close: (arg0: (err: any) => void) => void };
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   server = await app.listen(process.env.PORT);
-
+  const prismaService: PrismaService = app.get(PrismaService);
+  prismaService.enableShutdownHooks(app);
   console.log('Application has started on ' + process.env.PORT);
 
   // Handle process kill signals
