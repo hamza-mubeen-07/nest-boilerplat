@@ -20,7 +20,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config apps/user/test/jest-e2e.json"
+    "test:e2e": "jest --config apps/user/test/jest-e2e.json",
+    "migrate:dev": "prisma migrate dev"
   },
   "dependencies": {
     "@google-cloud/secret-manager": "^3.0.0",
@@ -30,7 +31,7 @@
     "@nestjs/microservices": "^7.1.1",
     "@nestjs/platform-express": "^7.1.1",
     "@nestjs/websockets": "^7.1.1",
-    "@prisma/client": "^3.2.1",
+    "@prisma/client": "^3.3.0",
     "dotenv": "^8.2.0",
     "hbs": "^4.1.2",
     "reflect-metadata": "^0.1.13",
@@ -46,7 +47,7 @@
     "jest": "26.0.1",
     "nodemon": "2.0.4",
     "prettier": "2.0.5",
-    "prisma": "3.2.1",
+    "prisma": "3.3.0",
     "supertest": "4.0.2",
     "ts-jest": "26.0.0",
     "ts-node": "8.10.2",
