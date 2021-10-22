@@ -29,9 +29,7 @@ services:
       - nest-network
     environment:
       MYSQL_DATABASE: ${DATABASE_NAME}
-      MYSQL_USER: ${DATABASE_USER}
       MYSQL_PASSWORD: ${DATABASE_PASSWORD}
-
       MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
     ports:
       - "3307:3306"
@@ -43,12 +41,12 @@ services:
   phpmyadmin:
     depends_on:
       - database-mysql
-    image: phpmyadmin/phpmyadmin
+    image: phpmyadmin
     restart: always
     ports:
       - '3308:80'
     environment:
-      PMA_HOST: global-mysql-5.7
+      PMA_HOST: database-mysql
       MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
     networks:
       - nest-network
