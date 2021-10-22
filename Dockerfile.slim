@@ -1,5 +1,10 @@
 FROM node:14-slim
 
+RUN apt update
+
+#installs openssl, required for prisma binaries
+RUN apt install -y libssl-dev
+
 # Create and change to the app directory.
 WORKDIR /usr/src/app
 
@@ -23,3 +28,4 @@ EXPOSE 3000
 
 # Run the web service on container startup.
 CMD [ "npm", "start" ]
+CMD [ "npm", "run", "migrate:dev" ]
