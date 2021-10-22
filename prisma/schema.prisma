@@ -8,8 +8,8 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets= ["native"]
 }
-
 
 model User {
   id    Int     @default(autoincrement()) @id
