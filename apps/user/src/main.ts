@@ -11,10 +11,6 @@ import {
 } from './user.constants';
 import { PrismaService } from '../../../prisma/prisma.service';
 
-// INFO: Don't remove, will be used later
-// import * as hbs from 'hbs';
-// import { join } from 'path';
-
 (async () => {
   const app = await NestFactory.create<NestExpressApplication>(UserModule);
   app.useGlobalFilters(new GlobalExceptionsFilter());
@@ -27,12 +23,6 @@ import { PrismaService } from '../../../prisma/prisma.service';
 
   const prismaService: PrismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);
-
-  // INFO: Don't remove, will be used later
-  // hbs.registerPartials(join(__dirname, '..', 'templates'));
-  // app.useStaticAssets(join(__dirname, '..', 'public'));
-  // app.setBaseViewsDir(join(__dirname, '..', 'views'));
-  // app.setViewEngine('hbs');
 
   console.log(`User service on port: 0.0.0.0:${SERVER_PORT}`);
   await app.listen(SERVER_PORT);
