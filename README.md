@@ -14,7 +14,7 @@ Ensure also that [Docker is installed](https://docs.docker.com/engine/install) o
 ## Using Docker Compose
 ```sh
 # Build the docker image
-$ docker-compose build
+$ docker-compose build --no-cache
 
 # Start and login to the container
 $ docker-compose up -d
