@@ -10,6 +10,7 @@ import {
   REQUEST_BODY_SIZE,
   SERVER_PORT,
 } from './auth.constants';
+import { ValidationPipe } from '@nestjs/common';
 
 (async () => {
   // TODO: Init sentry here, log calls in global.interceptor.ts
@@ -22,6 +23,7 @@ import {
     credentials: true,
   });
   app.use(cookieParser(AUTH_SECRET));
+  app.useGlobalPipes(new ValidationPipe());
 
   console.log(`Auth service on port: 0.0.0.0:${SERVER_PORT}`);
   await app.listen(SERVER_PORT);
