@@ -30,6 +30,7 @@ export class GlobalExceptionsFilter implements ExceptionFilter {
       //     url: request.url,
       //   },
       // });
+      console.error(exception);
       response.status(status).json({
         message:
           'An unknown error has occurred, we will be resolving it shortly.',
