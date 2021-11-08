@@ -1,4 +1,8 @@
 import { Injectable, HttpService } from '@nestjs/common';
+import {
+  COUNTRY_LIST_API_ENDPOINT,
+  SINGLE_COUNTRY_API_ENDPOINT,
+} from './user.constants';
 
 @Injectable()
 export class UserService {
@@ -6,26 +10,22 @@ export class UserService {
 
   sayHello() {
     return {
-      node_env: process.env.NODE_ENV,
-      port: process.env.PORT,
-      message: 'Hello Docker from Nest!',
+      message: 'Hello user!',
       time: Date.now().toString(),
     };
   }
 
   async fetchCountries(): Promise<any> {
-    const url = process.env.COUNTRY_LIST_API_ENDPOINT;
-    const { data } = await this.httpService.get(url).toPromise();
-
-    console.log(`There are ${data.length} countries in Africa!`);
+    const { data } = await this.httpService
+      .get(COUNTRY_LIST_API_ENDPOINT)
+      .toPromise();
     return data;
   }
 
   async fetchSingleCountry(): Promise<any> {
-    const url = process.env.SINGLE_COUNTRY_API_ENDPOINT;
-    console.log('url: ', url);
-
-    const { data } = await this.httpService.get(url).toPromise();
+    const { data } = await this.httpService
+      .get(SINGLE_COUNTRY_API_ENDPOINT)
+      .toPromise();
     return data;
   }
 }

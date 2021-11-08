@@ -3,20 +3,20 @@ import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly appService: UserService) {}
+  constructor(private readonly userService: UserService) {}
 
   @Get()
   sayHello() {
-    return this.appService.sayHello();
+    return this.userService.sayHello();
   }
 
   @Get('countries')
   async fetchCountries(): Promise<any> {
-    return await this.appService.fetchCountries();
+    return await this.userService.fetchCountries();
   }
 
   @Get('api_call')
   async make_api_call(): Promise<any> {
-    return await this.appService.fetchSingleCountry();
+    return await this.userService.fetchSingleCountry();
   }
 }

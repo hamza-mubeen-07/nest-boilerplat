@@ -16,7 +16,8 @@ services:
       - .:/usr/src/app
       - /usr/app/node_modules
     ports:
-      - "3000:3000"
+      - "${USER_PORT}:${USER_PORT}"
+      - "${AUTH_PORT}:${AUTH_PORT}"
     tty: true
     networks:
       - nest-network
