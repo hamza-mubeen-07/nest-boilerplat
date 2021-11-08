@@ -7,14 +7,11 @@ image: node:16
 
 pipelines:
   default:
-    - parallel:
-        - step:
-            name: Building and Testing Typescript
-            script:
-              - npm install
-              - npm test            
-              - npm install eslint
-              - npx eslint .
-              - npm run build
-            caches:
-              - node
+    - step:
+        name: Building and Testing Typescript
+        script:
+          - npm install
+          - npm test
+          - npm run build
+        caches:
+          - node
