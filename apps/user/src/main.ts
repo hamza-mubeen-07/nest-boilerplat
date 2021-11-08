@@ -10,6 +10,7 @@ import {
   SERVER_PORT,
 } from './user.constants';
 import { PrismaService } from '../../../prisma/prisma.service';
+import { ValidationPipe } from '@nestjs/common';
 
 (async () => {
   const app = await NestFactory.create<NestExpressApplication>(UserModule);
@@ -20,6 +21,7 @@ import { PrismaService } from '../../../prisma/prisma.service';
     origin: [ORIGIN_SITE, ORIGIN_DASHBOARD],
     credentials: true,
   });
+  app.useGlobalPipes(new ValidationPipe());
 
   const prismaService: PrismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);

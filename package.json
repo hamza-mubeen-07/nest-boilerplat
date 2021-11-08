@@ -21,7 +21,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config apps/user/test/jest-e2e.json",
-    "migrate:dev": "prisma migrate dev"
+    "migrate:dev": "prisma migrate dev",
+    "resetDb": "prisma migrate reset"
   },
   "dependencies": {
     "@google-cloud/secret-manager": "^3.0.0",
@@ -72,5 +73,8 @@
     "roots": [
       "<rootDir>/apps/"
     ]
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seeders/seed.ts"
   }
 }

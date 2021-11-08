@@ -1,22 +1,50 @@
-import { Get, Controller } from '@nestjs/common';
+import {
+  Get,
+  Controller,
+  Post,
+  Body,
+  Param,
+  Query,
+  Patch,
+  Delete,
+} from '@nestjs/common';
 import { UserService } from './user.service';
+import { User } from '@prisma/client';
+import { CreateUserDTO } from './user.dtos';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Get(':userId')
+  getUser(@Param('userId') userId: string) {
+    return this.userService.getUser(Number(userId));
+  }
+
   @Get()
-  sayHello() {
-    return this.userService.sayHello();
+  getUsers(
+    @Query('search') search: string,
+    @Query('skip') skip: number,
+    @Query('take') take: number,
+  ) {
+    return this.userService.getUsers(search, Number(skip), Number(take));
   }
 
-  @Get('countries')
-  async fetchCountries(): Promise<any> {
-    return await this.userService.fetchCountries();
+  @Post()
+  createUser(@Body() createUserDTO: CreateUserDTO): Promise<User> {
+    return this.userService.createUser(createUserDTO);
   }
 
-  @Get('api_call')
-  async make_api_call(): Promise<any> {
-    return await this.userService.fetchSingleCountry();
+  @Patch(':userId')
+  updateUser(
+    @Param('userId') userId: number,
+    @Body() createUserDTO: CreateUserDTO,
+  ): Promise<User> {
+    return this.userService.updateUser(Number(userId), createUserDTO);
+  }
+
+  @Delete(':userId')
+  deleteUser(@Param('userId') userId: number): Promise<User> {
+    return this.userService.deleteUser(Number(userId));
   }
 }

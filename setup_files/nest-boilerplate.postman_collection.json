@@ -9,11 +9,87 @@
 			"name": "User",
 			"item": [
 				{
-					"name": "root",
+					"name": "getUsers",
 					"request": {
 						"method": "GET",
 						"header": [],
+						"url": {
+							"raw": "{{USER_ENDPOINT}}",
+							"host": [
+								"{{USER_ENDPOINT}}"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "person",
+									"disabled": true
+								},
+								{
+									"key": "skip",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "take",
+									"value": "7",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{USER_ENDPOINT}}/1"
+					},
+					"response": []
+				},
+				{
+					"name": "createUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"some@example.com\",\n    \"name\": \"some person\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": "{{USER_ENDPOINT}}/"
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"some@example.com\",\n    \"name\": \"Some person (edited)\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{USER_ENDPOINT}}/1"
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUser",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{USER_ENDPOINT}}/1"
 					},
 					"response": []
 				}
