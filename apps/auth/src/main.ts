@@ -1,7 +1,7 @@
 import { AuthModule } from './auth.module';
 import { NestFactory } from '@nestjs/core';
 import { json, urlencoded } from 'body-parser';
-import cookieParser from 'cookie-parser';
+import * as cookieParser from 'cookie-parser';
 import { GlobalExceptionsFilter } from '../../../common/interceptors/global.interceptor';
 import {
   AUTH_SECRET,
