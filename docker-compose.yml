@@ -20,8 +20,13 @@ services:
     tty: true
     networks:
       - nest-network
-    command: "npm run start:dev"
-
+    entrypoint: [ "/bin/sh","-c" ]
+    command:
+    - |
+      npm ci
+      npx prisma generate
+      npm run migrate:dev
+      npm run start:dev
   database-mysql:
     image: mysql:5.7
     restart: always
@@ -32,9 +37,7 @@ services:
       MYSQL_PASSWORD: ${DATABASE_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
     ports:
-      - "3307:3306"
-    expose:
-      - "3307"
+      - "3306:3306"
     volumes:
       - datastore:/var/lib/mysql
 

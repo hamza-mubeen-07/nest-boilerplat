@@ -1,4 +1,4 @@
-FROM node:14-slim
+FROM node:16-slim
 
 RUN apt update
 
@@ -20,12 +20,5 @@ RUN npm ci --only=production
 # Copy local code to the container image.
 COPY . .
 
-# Display directory structure
-RUN ls -l
-
 # Expose API port
 EXPOSE 3000
-
-# Run the web service on container startup.
-CMD [ "npm", "start" ]
-CMD [ "npm", "run", "migrate:dev" ]
