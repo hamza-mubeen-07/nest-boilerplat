@@ -1,31 +1,31 @@
 import { Injectable, HttpService } from '@nestjs/common';
-import {
-  COUNTRY_LIST_API_ENDPOINT,
-  SINGLE_COUNTRY_API_ENDPOINT,
-} from './user.constants';
+import { Prisma, User } from '@prisma/client';
+import { UserRepository } from '../../../prisma/repositories/user.repository';
 
 @Injectable()
 export class UserService {
-  constructor(private httpService: HttpService) {}
+  constructor(
+    private httpService: HttpService,
+    private userRepository: UserRepository,
+  ) {}
 
-  sayHello() {
-    return {
-      message: 'Hello user!',
-      time: Date.now().toString(),
-    };
+  getUser(userId: number): Promise<User> {
+    return this.userRepository.getUser(userId);
   }
 
-  async fetchCountries(): Promise<any> {
-    const { data } = await this.httpService
-      .get(COUNTRY_LIST_API_ENDPOINT)
-      .toPromise();
-    return data;
+  getUsers(search: string, skip: number, take: number): Promise<User[]> {
+    return this.userRepository.getUsers(search, skip, take);
   }
 
-  async fetchSingleCountry(): Promise<any> {
-    const { data } = await this.httpService
-      .get(SINGLE_COUNTRY_API_ENDPOINT)
-      .toPromise();
-    return data;
+  createUser(user: Prisma.UserCreateInput) {
+    return this.userRepository.createUser(user);
+  }
+
+  updateUser(userId: number, user: Prisma.UserUpdateInput) {
+    return this.userRepository.updateUser(userId, user);
+  }
+
+  deleteUser(userId: number) {
+    return this.userRepository.deleteUser(userId);
   }
 }
