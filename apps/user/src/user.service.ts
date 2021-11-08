@@ -1,7 +1,7 @@
 import { Injectable, HttpService } from '@nestjs/common';
 
 @Injectable()
-export class AppService {
+export class UserService {
   constructor(private httpService: HttpService) {}
 
   sayHello() {

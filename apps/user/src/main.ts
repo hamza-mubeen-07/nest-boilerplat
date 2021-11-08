@@ -1,42 +1,29 @@
-import 'dotenv/config';
+import { UserModule } from './user.module';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { PrismaService } from '../../../prisma/prisma.service';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { join } from 'path';
+import { json, urlencoded } from 'body-parser';
+import { GlobalExceptionsFilter } from '../../../common/interceptors/global.interceptor';
+import {
+  ORIGIN_SITE,
+  ORIGIN_DASHBOARD,
+  REQUEST_BODY_SIZE,
+  SERVER_PORT,
+} from './user.constants';
+import { PrismaService } from '../../../prisma/prisma.service';
 
-let server: { close: (arg0: (err: any) => void) => void };
+(async () => {
+  const app = await NestFactory.create<NestExpressApplication>(UserModule);
+  app.useGlobalFilters(new GlobalExceptionsFilter());
+  app.use(json({ limit: REQUEST_BODY_SIZE }));
+  app.use(urlencoded({ limit: REQUEST_BODY_SIZE, extended: true }));
+  app.enableCors({
+    origin: [ORIGIN_SITE, ORIGIN_DASHBOARD],
+    credentials: true,
+  });
 
-async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  server = await app.listen(process.env.PORT);
   const prismaService: PrismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);
-  console.log(
-    'User service is running on Port: 0.0.0.0:' + process.env.USERS_PORT,
-  );
 
-  app.useStaticAssets(join(__dirname, '..', 'public'));
-  app.setBaseViewsDir(join(__dirname, '..', 'views'));
-  app.setViewEngine('hbs');
-
-  // Handle process kill signals
-  process.on('SIGINT', shutdown);
-  process.on('SIGTERM', shutdown);
-}
-
-function shutdown() {
-  server.close((err) => {
-    if (err) {
-      console.error(
-        'An error occurred while closing the server. Forecefullly shutting down',
-      );
-      console.error(err);
-      process.exit(1);
-    }
-    console.log('Http server closed.');
-    process.exit(0);
-  });
-}
-
-bootstrap();
+  console.log(`User service on port: 0.0.0.0:${SERVER_PORT}`);
+  await app.listen(SERVER_PORT);
+})();
