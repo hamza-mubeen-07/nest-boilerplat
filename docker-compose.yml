@@ -18,6 +18,8 @@ services:
     ports:
       - "${USER_PORT}:${USER_PORT}"
       - "${AUTH_PORT}:${AUTH_PORT}"
+      - "${POST_PORT}:${POST_PORT}"
+      - "${CATEGORY_PORT}:${CATEGORY_PORT}"
     tty: true
     networks:
       - nest-network
