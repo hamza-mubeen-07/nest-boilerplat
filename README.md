@@ -1,36 +1,39 @@
-# Nest JS Boilerplate
 
-This is a [Nest Js](https://github.com/nestjs/nest) project configured for use with Docker
+##Setup
+1. Duplicate example env
 
-## Installation
-
-Ensure also that [Docker is installed](https://docs.docker.com/engine/install) on your work station
-
-
-
-## Using Docker
-
-
-## Using Docker Compose
-```sh
-# Build the docker image
-$ docker-compose build --no-cache
-
-# Start and login to the container
-$ docker-compose up -d
-$ docker-compose exec app sh
+2. Build your image
+```
+docker-compose build
+```
+3. Setup container for the image
+```
+docker-compose up -d
 ```
 
-## Other useful Docker commands
-```sh
-# Get the container ID
-$ docker ps
+##Package Installations
+Updating packages added by the peers. (This will install/update packages according to the updated package lock)
+```
+npm ci
+```
+> Prefer running these commands inside the container. Initially/rerunning the container  will also trigger this.
 
-# View logs
-$ docker logs <container id>
+For installing packages use (This will install packages and update both package files)
+```
+npm i <package>
+```
+> Always review package-lock.json changes before committing.
 
-# Enter the container (In alpine, use sh because bash is not installed by default)
-$ docker exec -it <container id> /bin/sh
+##Migrations and seeding
+First make your changes to the model then run this command.
+
+Make sure to provide a proper name to this migration. (run in container)
+```
+npx prisma migrate dev --name <name>
+```
+To reset DB run (this will drop, rerun migrations and then seed local db)
+```
+npm run resetDb
 ```
 
 ## Testing
@@ -46,8 +49,22 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Docker useful commands
+```sh
+# Login to the container
+$ docker-compose exec app sh
 
-## Maintain following directory structure
+# Get the container ID
+$ docker ps
+
+# View logs
+$ docker logs <container id>
+
+# Enter the container (In alpine, use sh because bash is not installed by default)
+$ docker exec -it <container id> /bin/sh
+```
+
+## Directory structure
 
 ### Each module will have its own directory under ``src`` i.e to achieve micro-service architecture
 ```bash
