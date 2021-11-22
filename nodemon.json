@@ -2,6 +2,6 @@
   "watch": ["apps", "common", "prisma/repositories"],
   "ext": "ts",
   "ignore": ["src/**/*.spec.ts"],
-  "exec": "ts-node -r tsconfig-paths/register apps/auth/src/main.ts & ts-node -r tsconfig-paths/register apps/user/src/main.ts",
+  "exec": "ts-node -r tsconfig-paths/register apps/auth/src/main.ts & ts-node -r tsconfig-paths/register apps/user/src/main.ts & ts-node -r tsconfig-paths/register apps/post/src/main.ts & ts-node -r tsconfig-paths/register apps/category/src/main.ts",
   "verbose": true
 }

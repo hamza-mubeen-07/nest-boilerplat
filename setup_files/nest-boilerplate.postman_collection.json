@@ -96,6 +96,186 @@
 			]
 		},
 		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "getPosts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{POST_ENDPOINT}}",
+							"host": [
+								"{{POST_ENDPOINT}}"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "person",
+									"disabled": true
+								},
+								{
+									"key": "skip",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "take",
+									"value": "7",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPost",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{POST_ENDPOINT}}/1"
+					},
+					"response": []
+				},
+				{
+					"name": "createPost",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"some@example.com\",\n    \"name\": \"some person\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{POST_ENDPOINT}}/"
+					},
+					"response": []
+				},
+				{
+					"name": "updatePost",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"some@example.com\",\n    \"name\": \"Some person (edited)\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{POST_ENDPOINT}}/1"
+					},
+					"response": []
+				},
+				{
+					"name": "deletePost",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{POST_ENDPOINT}}/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "getCategories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{CATEGORY_ENDPOINT}}",
+							"host": [
+								"{{CATEGORY_ENDPOINT}}"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "one",
+									"disabled": true
+								},
+								{
+									"key": "skip",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "take",
+									"value": "7",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCategory",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{CATEGORY_ENDPOINT}}/1"
+					},
+					"response": []
+				},
+				{
+					"name": "createCategory",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"some@example.com\",\n    \"name\": \"some person\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{CATEGORY_ENDPOINT}}/"
+					},
+					"response": []
+				},
+				{
+					"name": "updateCategory",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"some@example.com\",\n    \"name\": \"Some person (edited)\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{CATEGORY_ENDPOINT}}/1"
+					},
+					"response": []
+				},
+				{
+					"name": "deleteCategory",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{CATEGORY_ENDPOINT}}/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Auth",
 			"item": [
 				{
@@ -138,6 +318,14 @@
 		{
 			"key": "AUTH_ENDPOINT",
 			"value": "http://localhost:3001/auth"
+		},
+		{
+			"key": "POST_ENDPOINT",
+			"value": "http://localhost:3002/post"
+		},
+		{
+			"key": "CATEGORY_ENDPOINT",
+			"value": "http://localhost:3003/category"
 		}
 	]
 }
