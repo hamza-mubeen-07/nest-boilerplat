@@ -2,7 +2,6 @@ version: "3.8"
 
 services:
   app:
-    image: "node:16-slim"
     container_name: 'uat_boilerplate'
     build:
       context: ./
