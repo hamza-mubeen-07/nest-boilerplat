@@ -8,7 +8,8 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
-    "start": "node dist/main.js",
+    "start": "node dist/apps/health-check/src/main.js",
+    "start:prod": "concurrently --kill-others \"node dist/apps/auth/src/main.js\" \"node dist/apps/category/src/main.js\" \"node dist/apps/post/src/main.js\" \"node dist/apps/user/src/main.js\"",
     "start:ts": "ts-node -r tsconfig-paths/register src/main.ts",
     "start:dev": "nodemon",
     "start:debug": "nodemon --config nodemon-debug.json",
@@ -22,7 +23,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config apps/user/test/jest-e2e.json",
     "migrate:dev": "prisma migrate dev",
-    "resetDb": "prisma migrate reset"
+    "resetDb": "prisma migrate reset",
+    "doc:serve": "npx @compodoc/compodoc -p tsconfig.build.json -s"
   },
   "dependencies": {
     "@google-cloud/secret-manager": "^3.0.0",
@@ -33,19 +35,25 @@
     "@nestjs/platform-express": "^7.1.1",
     "@nestjs/websockets": "^7.1.1",
     "@prisma/client": "^3.3.0",
+    "class-validator": "^0.13.2",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.6.0",
     "hbs": "^4.1.2",
+    "nats": "^2.4.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^6.5.5"
+    "rxjs": "^6.5.5",
+    "ts-loader": "^9.2.6"
   },
   "devDependencies": {
+    "@compodoc/compodoc": "^1.1.16",
+    "@nestjs/cli": "^8.1.5",
     "@nestjs/testing": "6.0.5",
     "@types/express": "4.17.6",
     "@types/jest": "25.2.3",
     "@types/node": "^14.0.5",
     "@types/supertest": "2.0.9",
+    "concurrently": "^6.4.0",
     "jest": "26.0.1",
     "nodemon": "2.0.4",
     "prettier": "2.0.5",

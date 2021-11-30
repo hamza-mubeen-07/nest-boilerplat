@@ -4,10 +4,15 @@ dotenv.config({ path: __dirname + '/./../../../.env' });
 export const AUTH_SECRET =
   process.env.AUTH_SECRET || 'someSecretKeyThatNeedsToBeChangedLater';
 
-export const ORIGIN_SITE = process.env.ORIGIN_SITE || '';
-
-export const ORIGIN_DASHBOARD = process.env.ORIGIN_DASHBOARD || '';
-
 export const REQUEST_BODY_SIZE = '50mb';
 
-export const SERVER_PORT = process.env.AUTH_PORT;
+export const SERVER_PORT = parseInt(process.env.AUTH_PORT, 10) || 3001;
+
+export const WHITE_LISTED_DOMAINS = process.env.WHITE_LISTED_DOMAINS || '';
+
+export const NATS_URL = process.env.NATS_URL;
+
+export const MS_INTERNAL_PORT =
+  parseInt(process.env.AUTH_MS_INTERNAL_PORT, 10) || 3004;
+
+export const APP_NATS_QUEUE = 'auth_queue';
