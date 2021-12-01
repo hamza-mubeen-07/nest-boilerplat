@@ -12,7 +12,4 @@ export const WHITE_LISTED_DOMAINS = process.env.WHITE_LISTED_DOMAINS || '';
 
 export const NATS_URL = process.env.NATS_URL;
 
-export const MS_INTERNAL_PORT =
-  parseInt(process.env.AUTH_MS_INTERNAL_PORT, 10) || 3004;
-
 export const APP_NATS_QUEUE = 'auth_queue';
