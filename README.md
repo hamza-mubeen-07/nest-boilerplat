@@ -105,5 +105,12 @@ All deployment related files are present in docker directory.
 - Docker files includes information about building app.
 - Nginx folder contains all configs that will be copied to nginx container. (make sure to change domain links)
 
-## License
-[MIT licensed](LICENSE)
+## Update
+Update package version information in package.json  
+```
+npx npm-check-updates "/nestjs*/" -u
+```
+May need to install packages with this flag
+```angular2html
+npm i --legacy-peer-deps
+```
