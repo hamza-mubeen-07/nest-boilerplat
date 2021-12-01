@@ -10,6 +10,7 @@ services:
     working_dir: /usr/src/app
     volumes:
       - ./:/usr/src/app
+      - /usr/src/app/node_modules
     ports:
       - "$USER_PORT:$USER_PORT"
       - "$AUTH_PORT:$AUTH_PORT"

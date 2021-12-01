@@ -3,6 +3,8 @@ version: "3.8"
 services:
   app:
     container_name: 'local_boilerplate'
+    env_file:
+      - .env
     build:
       context: ./
       dockerfile: Dockerfile.slim
@@ -10,6 +12,10 @@ services:
     working_dir: /usr/src/app
     volumes:
       - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - database-mysql
+      - nats
     ports:
       - "$USER_PORT:$USER_PORT"
       - "$AUTH_PORT:$AUTH_PORT"
@@ -22,7 +28,6 @@ services:
     entrypoint: [ "/bin/sh","-c" ]
     command:
       - |
-        npm ci
         npx prisma generate
         npx prisma migrate deploy
         npm run start:dev
