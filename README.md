@@ -1,15 +1,28 @@
+##Setup "LIVE"
+1. Setup env according to example file
+2. Build your image using "docker/docker-compose-prod.yml"
+3. Now run your container.
 
-##Setup
+##Setup "LOCAL"
 1. Duplicate example env
-
 2. Build your image
 ```
-docker-compose build
+docker-compose -f docker-compose-local.yml build
 ```
+> In case of build errors use "--no-cache" flag.
 3. Setup container for the image
 ```
-docker-compose up -d
+docker-compose -f docker-compose-local.yml up -d
 ```
+4. To build and run at the same time use this
+```
+docker-compose -f docker-compose-local.yml up --build -d
+```
+5. Only in case of external db, put migration folder in gitignore and run this command inside container.
+```
+npx prisma migrate dev
+```
+> Please DON'T run in this in production!!!
 
 ##Package Installations
 Updating packages added by the peers. (This will install/update packages according to the updated package lock)
@@ -33,8 +46,9 @@ npx prisma migrate dev --name <name>
 ```
 To reset DB run (this will drop, rerun migrations and then seed local db)
 ```
-npm run resetDb
+npx prisma migrate reset
 ```
+> NEVER RUN THIS FOR PRODUCTION!!!
 
 ## Testing
 
@@ -51,6 +65,10 @@ $ npm run test:cov
 
 ## Docker useful commands
 ```sh
+
+# Prune (ask DevOps first)
+$ docker system prune --volumes
+
 # Login to the container
 $ docker-compose exec app sh
 
@@ -66,21 +84,26 @@ $ docker exec -it <container id> /bin/sh
 
 ## Directory structure
 
-### Each module will have its own directory under ``src`` i.e to achieve micro-service architecture
+#### Each module will have its own directory under ``src`` i.e to achieve micro-service architecture
+
 ```bash
-# <repo-root>/src/user
-# <repo-root>/src/country
-# <repo-root>/src/category
-# <repo-root>/src/activity
+# <repo-root>/src/<app-module>
 ```
 
-### ORM Prisma will be managed outside the ``src`` , so that it will be available globally and will have following DIR Structure 
+#### ORM Prisma will be managed outside the ``src`` , so that it will be available globally and will have following DIR Structure
 ```bash
 # <repo-root>/prisma/models/<models>
 # <repo-root>/prisma/repositories/<repositories>
 # <repo-root>/prisma/migrations/<migrations>
 # <repo-root>/prisma/seeders/<seeders>
 ```
+
+## How deployments are working
+
+All deployment related files are present in docker directory.
+- Compose files includes configuration for required containers.
+- Docker files includes information about building app.
+- Nginx folder contains all configs that will be copied to nginx container. (make sure to change domain links)
 
 ## License
 [MIT licensed](LICENSE)
