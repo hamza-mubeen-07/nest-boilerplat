@@ -25,6 +25,9 @@ export class AuthController {
     return this.authService.sayHello();
   }
 
+  /**
+   * Hit this api to test microservice
+   */
   @Get('test_ms')
   createReferral() {
     this.client.emit<{ message: string }>('test_ms', {
@@ -33,6 +36,10 @@ export class AuthController {
     return { message: 'This text is also sent to microservice event.' };
   }
 
+  /**
+   * This function receives microservice event and shows sent data as well as result of a test http request.
+   * @param message
+   */
   @EventPattern('test_ms')
   async linkReferral({ message }): Promise<void> {
     console.info(`Microservice: ${message}`);
@@ -51,7 +58,7 @@ export class AuthController {
   }
 
   /**
-   * Example page for SSR.
+   * Example page with SSR.
    */
   @Get('ssr_example')
   root(@Res() res: Response) {
@@ -60,6 +67,9 @@ export class AuthController {
     });
   }
 
+  /**
+   * Our SSR app listen for server responses using this path i.e. "auth/sse"
+   */
   @Sse('sse')
   sse(): Observable<MessageEvent> {
     return interval(1000).pipe(
