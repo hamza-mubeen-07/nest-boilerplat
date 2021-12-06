@@ -19,10 +19,15 @@ export class GenericResponseInterceptor<T>
     context: ExecutionContext,
     next: CallHandler,
   ): Observable<Response<T>> {
-    return next.handle().pipe(
-      map((data) => {
-        return { response: data, error: false, message: '' };
-      }),
-    );
+    const request = context.switchToHttp().getRequest();
+    if (request.url.includes('sse')) {
+      return next.handle();
+    } else {
+      return next.handle().pipe(
+        map((data) => {
+          return { response: data, error: false, message: '' };
+        }),
+      );
+    }
   }
 }
