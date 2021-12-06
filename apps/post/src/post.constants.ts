@@ -7,4 +7,6 @@ export const ORIGIN_DASHBOARD = process.env.ORIGIN_DASHBOARD || '';
 
 export const REQUEST_BODY_SIZE = '50mb';
 
-export const SERVER_PORT = process.env.POST_PORT;
+export const SERVER_PORT = parseInt(process.env.POST_PORT, 10);
+
+export const WHITE_LISTED_DOMAINS = process.env.WHITE_LISTED_DOMAINS || '';
