@@ -1,13 +1,10 @@
-import { Injectable, HttpService } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
 import { UserRepository } from '../../../prisma/repositories/user.repository';
 
 @Injectable()
 export class UserService {
-  constructor(
-    private httpService: HttpService,
-    private userRepository: UserRepository,
-  ) {}
+  constructor(private userRepository: UserRepository) {}
 
   getUser(userId: number): Promise<User> {
     return this.userRepository.getUser(userId);

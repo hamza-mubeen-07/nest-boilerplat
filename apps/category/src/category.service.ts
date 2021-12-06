@@ -1,13 +1,10 @@
-import { Injectable, HttpService } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Prisma, Category } from '@prisma/client';
 import { CategoryRepository } from '../../../prisma/repositories/category.repository';
 
 @Injectable()
 export class CategoryService {
-  constructor(
-    private httpService: HttpService,
-    private categoryRepository: CategoryRepository,
-  ) {}
+  constructor(private categoryRepository: CategoryRepository) {}
 
   getCategory(categoryId: number): Promise<Category> {
     return this.categoryRepository.getCategory(categoryId);

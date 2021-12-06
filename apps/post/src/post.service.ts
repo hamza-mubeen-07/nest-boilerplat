@@ -1,13 +1,10 @@
-import { Injectable, HttpService } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Prisma, Post } from '@prisma/client';
 import { PostRepository } from '../../../prisma/repositories/post.repository';
 
 @Injectable()
 export class PostService {
-  constructor(
-    private httpService: HttpService,
-    private postRepository: PostRepository,
-  ) {}
+  constructor(private postRepository: PostRepository) {}
 
   getPost(postId: number): Promise<Post> {
     return this.postRepository.getPost(postId);
