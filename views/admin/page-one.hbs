@@ -1,14 +1,34 @@
-{{#> layouts/base title="Page One" }}
-
+{{#> layouts/react title="Page One" }}
   {{#*inline "content-block"}}
-    <p> {{ message }} </p>
-    {{> components/sample
-      logo-src="/public/img/test-image.jpg"
-      logo-alt="No test image"
-    }}
-  {{/inline}}
+    const [count, setCount] = React.useState(0);
+    const [text, setText] = React.useState("Initial message");
 
-  {{#*inline "footer-block"}}
-    <p>We are now overriding the default "footer-block" content with this content.</p>
+    React.useEffect(() => {
+      console.log("Launching event source.");
+      const sse = new EventSource('/auth/sse', { withCredentials: true });
+
+      function getRealtimeData(data) {
+        setText(data.time)
+      }
+      sse.onmessage = e => getRealtimeData(JSON.parse(e.data));
+
+      sse.onerror = () => {
+        sse.close();
+      }
+
+      return () => {
+        sse.close();
+      };
+    }, []);
+
+    return (
+      <div>
+        <p>{text}</p>
+        <p>You clicked {count} times</p>
+        <button onClick={()=> setCount(count + 1)}>
+        Click me
+        </button>
+      </div>
+    );
   {{/inline}}
-{{/layouts/base}}
+{{/layouts/react}}
