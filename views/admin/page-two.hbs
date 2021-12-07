@@ -1,0 +1,14 @@
+{{#> layouts/base title="Page Two" }}
+
+  {{#*inline "content-block"}}
+    <p> {{ message }} </p>
+    {{> components/sample
+      logo-src="/public/img/test-image.jpg"
+      logo-alt="No test image"
+    }}
+  {{/inline}}
+
+  {{#*inline "footer-block"}}
+    <p>We are now overriding the default "footer-block" content with this content.</p>
+  {{/inline}}
+{{/layouts/base}}

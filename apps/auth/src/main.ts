@@ -14,6 +14,8 @@ import {
 } from './auth.constants';
 import { ValidationPipe } from '@nestjs/common';
 import { Transport } from '@nestjs/microservices';
+import { join } from 'path';
+import * as hbs from 'hbs';
 
 (async () => {
   const app = await NestFactory.create<NestExpressApplication>(AuthModule);
@@ -28,6 +30,13 @@ import { Transport } from '@nestjs/microservices';
   });
   app.use(cookieParser(AUTH_SECRET));
   app.useGlobalPipes(new ValidationPipe());
+
+  app.useStaticAssets(join(__dirname, '../../..', 'public'), {
+    prefix: '/public/',
+  });
+  app.setBaseViewsDir(join(__dirname, '../../..', 'views'));
+  hbs.registerPartials(join(__dirname, '../../..', 'templates'));
+  app.setViewEngine('hbs');
 
   app.connectMicroservice(
     {

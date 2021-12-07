@@ -14,7 +14,7 @@ docker-compose -f docker-compose-local.yml build
 ```
 docker-compose -f docker-compose-local.yml up -d
 ```
-4. To build and run at the same time use this
+4. For clean build and run at the same time use this
 ```
 docker-compose -f docker-compose-local.yml up --build -d
 ```
@@ -103,7 +103,13 @@ All deployment related files are present in docker directory.
 - Docker files includes information about building app.
 - Nginx folder contains all configs that will be copied to nginx container. (make sure to change domain links)
 
-## Update
+## How to add views
+- Add pages in views folder under respective module.
+- Fix templates will go in includes folder under template directory.
+- Dynamic templates will go inside component folder under template directory.
+- Layout folder under template includes layouts for the whole app. 
+
+## How to update
 Update package version information in package.json  
 ```
 npx npm-check-updates "/nestjs*/" -u
