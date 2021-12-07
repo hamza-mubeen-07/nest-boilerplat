@@ -5,10 +5,12 @@ import { ClientsModule } from '@nestjs/microservices';
 import { APP_NATS_QUEUE, NATS_URL } from './auth.constants';
 import { Transport } from '@nestjs/microservices';
 import { HttpModule } from '@nestjs/axios';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
     HttpModule,
+    ScheduleModule.forRoot(),
     ClientsModule.register([
       {
         name: 'NATS_SERVICE',

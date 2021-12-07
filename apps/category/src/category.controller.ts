@@ -7,6 +7,9 @@ import {
   Query,
   Patch,
   Delete,
+  CacheTTL,
+  UseInterceptors,
+  CacheInterceptor,
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { Category } from '@prisma/client';
@@ -21,6 +24,8 @@ export class CategoryController {
     return this.categoryService.getCategory(Number(categoryId));
   }
 
+  @CacheTTL(10)
+  @UseInterceptors(CacheInterceptor)
   @Get()
   getCategories(
     @Query('search') search: string,
