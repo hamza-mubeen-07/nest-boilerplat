@@ -10,9 +10,7 @@ import {
   REQUEST_BODY_SIZE,
   SERVER_PORT,
   WHITE_LISTED_DOMAINS,
-  MS_INTERNAL_PORT,
   NATS_URL,
-  APP_NATS_QUEUE,
 } from './auth.constants';
 import { ValidationPipe } from '@nestjs/common';
 import { Transport } from '@nestjs/microservices';
@@ -33,11 +31,9 @@ import { Transport } from '@nestjs/microservices';
 
   app.connectMicroservice(
     {
-      transport: Transport.TCP,
+      transport: Transport.NATS,
       options: {
-        url: NATS_URL,
-        queue: APP_NATS_QUEUE,
-        port: MS_INTERNAL_PORT,
+        servers: [NATS_URL],
       },
     },
     { inheritAppConfig: true },

@@ -1,24 +1,24 @@
 FROM node:16-slim
 
-RUN apt update
+# Import envs mentioned in .env file mounted by compose file.
+ARG USER_PORT
+ARG AUTH_PORT
+ARG POST_PORT
+ARG CATEGORY_PORT
 
-#installs openssl, required for prisma binaries
-RUN apt install -y libssl-dev
+# Installs OS dependencies
+RUN apt update
+RUN apt install -y libssl-dev #required for prisma binaries
 
 # Create and change to the app directory.
 WORKDIR /usr/src/app
 
-# Copy application dependency manifests to the container image.
-# A wildcard is used to ensure both package.json AND package-lock.json are copied.
-# Copying this separately prevents re-running npm install on every code change.
+# Copy both package files, use npm ci if you have lock file.
 COPY package*.json ./
+RUN npm ci
 
-# Install dependencies.
-# If you add a package-lock.json speed your build by switching to 'npm ci'.
-RUN npm ci --only=production
-
-# Copy local code to the container image.
-COPY . .
+# Copy code and build
+COPY . ./
 
 # Expose API port
-EXPOSE 3000 3001 3002 3003
+EXPOSE $USER_PORT $AUTH_PORT $POST_PORT $CATEGORY_PORT

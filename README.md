@@ -18,19 +18,17 @@ docker-compose -f docker-compose-local.yml up -d
 ```
 docker-compose -f docker-compose-local.yml up --build -d
 ```
-5. Only in case of external db, put migration folder in gitignore and run this command inside container.
+5. RUN this first time and on each lock changes made by the peers to create/update node_modules on host
+```
+npm ci
+```
+6. Only in case of external db, remove deploy command from compose file, put migration folder in gitignore and run this command inside container.
 ```
 npx prisma migrate dev
 ```
 > Please DON'T run in this in production!!!
 
 ##Package Installations
-Updating packages added by the peers. (This will install/update packages according to the updated package lock)
-```
-npm ci
-```
-> Prefer running these commands inside the container. Initially/rerunning the container  will also trigger this.
-
 For installing packages use (This will install packages and update both package files)
 ```
 npm i <package>
@@ -105,5 +103,9 @@ All deployment related files are present in docker directory.
 - Docker files includes information about building app.
 - Nginx folder contains all configs that will be copied to nginx container. (make sure to change domain links)
 
-## License
-[MIT licensed](LICENSE)
+## Update
+Update package version information in package.json  
+```
+npx npm-check-updates "/nestjs*/" -u
+```
+Don't use "--legacy-peer-deps" or "--force" flag. Make your changes to package file according to the error displayed.
