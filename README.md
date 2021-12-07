@@ -1,3 +1,9 @@
+## Setup linter & prettier
+
+1. Go to Settings-> Languages & Frameworks -> JavaScript -> Prettier : Tick both check boxes at the bottom of the page.
+2. Go to Settings-> Languages & Frameworks -> JavaScript -> Code Quality Tools -> ESLint: Change selected radio button to Automatic ESLint configuration & Tick Check box to Run on save
+3. Go to Settings-> Appearance & Behavior ->  System Settings: In Autosave section Tick the`Save files if the IDE is idle for... ` And set it accordingly 2s-5s is recommended.
+
 ##Setup "LIVE"
 1. Setup env according to example file
 2. Build your image using "docker/docker-compose-prod.yml"
