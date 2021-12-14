@@ -30,7 +30,7 @@ npm ci
 ```
 6. Only in case of external db, remove deploy command from compose file, put migration folder in gitignore and run this command inside container.
 ```
-npx prisma migrate dev
+npx prisma migrate deploy
 ```
 > Please DON'T run in this in production!!!
 
