@@ -16,6 +16,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { Transport } from '@nestjs/microservices';
 import { join } from 'path';
 import * as hbs from 'hbs';
+import * as morgan from 'morgan-body';
 
 (async () => {
   const app = await NestFactory.create<NestExpressApplication>(AuthModule);
@@ -24,6 +25,18 @@ import * as hbs from 'hbs';
   app.useGlobalInterceptors(new GenericResponseInterceptor());
   app.use(json({ limit: REQUEST_BODY_SIZE }));
   app.use(urlencoded({ limit: REQUEST_BODY_SIZE, extended: true }));
+
+  (morgan as any)(app.getHttpAdapter().getInstance(), {
+    noColors: true,
+    logAllReqHeader: true,
+    stream: {
+      write: (message: string) => {
+        console.info(message);
+        return true;
+      },
+    },
+  });
+
   app.enableCors({
     origin: WHITE_LISTED_DOMAINS.split(','),
     credentials: true,
