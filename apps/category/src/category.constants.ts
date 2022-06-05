@@ -14,3 +14,7 @@ export const WHITE_LISTED_DOMAINS = process.env.WHITE_LISTED_DOMAINS || '';
 export const MAX_CACHE_ITEMS = 30;
 
 export const MAX_CACHE_TIME_SEC = 5;
+
+export const REDIS_PORT = parseInt(process.env.REDIS_PORT, 10);
+
+export const REDIS_HOST = process.env.REDIS_HOST || 'localhost';
